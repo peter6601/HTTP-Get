@@ -8,13 +8,40 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UITextFieldDelegate {
 
+    @IBOutlet weak var firstTextField: UITextField!
+    @IBOutlet weak var secondTextField: UITextField!
+    @IBOutlet weak var resultLabel: UILabel!
+     var someNumber = Parameter()
+    
+    
+    @IBAction func click(sender: AnyObject) {
+        someNumber.a = Int(firstTextField.text!)!
+        someNumber.b = Int(secondTextField.text!)!
+        let aSingleAPI = FirstAPI()
+        aSingleAPI.ConnectAPI(didLoadShot,firstNumber:someNumber.a ,secondNumber: someNumber.b )
+        
+
+    }
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+       firstTextField.delegate = self
+        secondTextField.delegate = self
+        
+        
     }
-
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        firstTextField.resignFirstResponder()
+        secondTextField.resignFirstResponder()
+        return true
+    }
+    
+    func didLoadShot(data: Shots) {
+        resultLabel.text = String(data.reslut)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
